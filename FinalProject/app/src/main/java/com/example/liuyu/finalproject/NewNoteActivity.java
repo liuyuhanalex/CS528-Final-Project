@@ -1,5 +1,6 @@
 package com.example.liuyu.finalproject;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
@@ -41,6 +42,8 @@ public class NewNoteActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private TextView mdate;
 
+    private Button camera,speech;
+
     private FirebaseAuth fAuth;
     private DatabaseReference fNoteDatabase;
 
@@ -73,6 +76,9 @@ public class NewNoteActivity extends AppCompatActivity {
         etContent = findViewById(R.id.new_note_content);
         etType = findViewById(R.id.new_note_type);
 
+        camera = findViewById(R.id.camera);
+        speech = findViewById(R.id.speech);
+
         mToolbar = findViewById(R.id.toolbar2);
         mdate = findViewById(R.id.note_date);
 
@@ -86,6 +92,24 @@ public class NewNoteActivity extends AppCompatActivity {
                 .child(fAuth.getCurrentUser().getUid());
 
         mdate.setText(getDate(System.currentTimeMillis()));
+
+        //Camera activity start here
+        camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent carmeraIntent = new Intent(NewNoteActivity.this,TextRecognitionActivity.class);
+                startActivity(carmeraIntent);
+            }
+        });
+
+        //Speech to Text activity start here
+        speech.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent speechIntent = new Intent(NewNoteActivity.this,SpeechToTextActivity.class);
+                startActivity(speechIntent);
+            }
+        });
 
 
         btnCreate.setOnClickListener(new View.OnClickListener() {

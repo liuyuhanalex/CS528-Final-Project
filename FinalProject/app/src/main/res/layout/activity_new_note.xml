@@ -114,18 +114,20 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/camera"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Button" />
+            android:text="Camera"
+            android:drawableLeft="@drawable/ic_photo_camera_black_24dp"/>
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/speech"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Button" />
+            android:text="Speech"
+            android:drawableLeft="@drawable/ic_record_voice_over_black_24dp"/>
     </LinearLayout>
 
     <Button
