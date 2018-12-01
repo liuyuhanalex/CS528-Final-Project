@@ -7,13 +7,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+import java.time.Clock;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,15 +28,18 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 
 public class NewNoteActivity extends AppCompatActivity {
 
     private Button btnCreate;
-    private EditText etTitle,etContent;
+    private EditText etTitle,etContent,etType;
     private Toolbar mToolbar;
+    private TextView mdate;
 
     private FirebaseAuth fAuth;
     private DatabaseReference fNoteDatabase;
@@ -65,8 +71,10 @@ public class NewNoteActivity extends AppCompatActivity {
         btnCreate = findViewById(R.id.new_note_btn);
         etTitle = findViewById(R.id.new_note_title);
         etContent = findViewById(R.id.new_note_content);
+        etType = findViewById(R.id.new_note_type);
 
         mToolbar = findViewById(R.id.toolbar2);
+        mdate = findViewById(R.id.note_date);
 
         setSupportActionBar(mToolbar);
 
@@ -77,44 +85,56 @@ public class NewNoteActivity extends AppCompatActivity {
         fNoteDatabase = FirebaseDatabase.getInstance().getReference().child("Notes")
                 .child(fAuth.getCurrentUser().getUid());
 
+        mdate.setText(getDate(System.currentTimeMillis()));
+
+
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 String title = etTitle.getText().toString().trim();
                 String content = etContent.getText().toString().trim();
+                String type = etType.getText().toString().trim();
 
                 if(!TextUtils.isEmpty(title)&&!TextUtils.isEmpty(content)){
-                    createNote(title,content);
+                    createNote(title,content,type);
                 }else{
                     Snackbar.make(v,"Fill empty fields",Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
-
         putData();
 
     }
 
     private void putData(){
-        fNoteDatabase.child(noteID).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String title = dataSnapshot.child("title").getValue().toString();
-                String content = dataSnapshot.child("content").getValue().toString();
+        if(isExist) {
+            fNoteDatabase.child(noteID).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 
-                etTitle.setText(title);
-                etContent.setText(content);
-            }
+                    if (dataSnapshot.hasChild("title") && dataSnapshot.hasChild("content")) {
+                        String title = dataSnapshot.child("title").getValue().toString();
+                        String content = dataSnapshot.child("content").getValue().toString();
+                        String reTime=getDate(Long.parseLong(dataSnapshot.child("timestamp").getValue().toString()));
+                        String type = dataSnapshot.child("type").getValue().toString();
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                        etTitle.setText(title);
+                        etContent.setText(content);
+                        mdate.setText(reTime);
+                        etType.setText(type);
+                    }
+                }
 
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
     }
 
-    private  void createNote(String title,String content){
+    private  void createNote(String title,String content,String type){
 
         if(fAuth.getCurrentUser()!=null){
 
@@ -124,7 +144,10 @@ public class NewNoteActivity extends AppCompatActivity {
                 updateMap.put("title",etTitle.getText().toString().trim());
                 updateMap.put("content",etContent.getText().toString().trim());
                 updateMap.put("timestamp",ServerValue.TIMESTAMP);
+                updateMap.put("type",etType.getText().toString().trim());
                 fNoteDatabase.child(noteID).updateChildren(updateMap);
+
+                Toast.makeText(this,"Note updated",Toast.LENGTH_SHORT).show();
 
             }else {
                 //Create a new note
@@ -135,6 +158,7 @@ public class NewNoteActivity extends AppCompatActivity {
                 noteMap.put("title", title);
                 noteMap.put("content", content);
                 noteMap.put("timestamp", ServerValue.TIMESTAMP);
+                noteMap.put("type",type);
 
                 Thread mainThread = new Thread(new Runnable() {
                     @Override
@@ -208,5 +232,12 @@ public class NewNoteActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private String getDate(long time) {
+        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+        cal.setTimeInMillis(time);
+        String date = DateFormat.format("yyyy.MM.dd ' at ' HH:mm:ss", cal).toString();
+        return date;
     }
 }

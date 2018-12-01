@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:minWidth="156dp"
-    android:layout_height="wrap_content">
+    android:orientation="horizontal">
 
     <android.support.v7.widget.CardView
         android:id="@+id/note_card"
-        app:contentPadding="5dp"
-        android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:layout_height="128dp"
-        android:minHeight="128dp"
-        android:maxHeight="128dp"
+        android:layout_margin="5dp"
         android:clickable="true"
-        android:focusable="true">
+        android:focusable="true"
+        android:maxHeight="128dp"
+        android:minHeight="128dp"
+        app:contentPadding="5dp">
 
         <LinearLayout
             android:layout_width="156dp"
@@ -27,20 +27,31 @@
                 android:id="@+id/note_title"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:text="Note title"
-                android:maxLines="5"
-                android:ellipsize="end"
-                android:textColor="@android:color/black"
+                android:layout_marginBottom="10dp"
                 android:layout_weight="1"
-                android:layout_marginBottom="10dp"/>
+                android:ellipsize="end"
+                android:maxLines="5"
+                android:text="Note title"
+                android:textColor="@android:color/black"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/note_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Note type"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp" />
+
             <TextView
                 android:id="@+id/note_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:maxLines="1"
                 android:ellipsize="end"
-                android:text="Update time"/>
+                android:maxLines="1"
+                android:text="Update time"
+                android:textColor="@color/colorAccent"
+                android:textSize="12sp" />
         </LinearLayout>
 
     </android.support.v7.widget.CardView>

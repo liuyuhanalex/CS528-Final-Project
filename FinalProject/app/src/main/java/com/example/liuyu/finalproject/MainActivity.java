@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
@@ -22,6 +23,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Calendar;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -80,13 +84,16 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        if(dataSnapshot.hasChild("title")&&dataSnapshot.hasChild("timestamp")) {
+                        if(dataSnapshot.hasChild("title")&&dataSnapshot.hasChild("timestamp")
+                                &&dataSnapshot.hasChild("type")) {
 
                             String title = dataSnapshot.child("title").getValue().toString();
                             String timestamp = dataSnapshot.child("timestamp").getValue().toString();
+                            String type = dataSnapshot.child("type").getValue().toString();
 
                             viewHolder.setNotetitle(title);
-                            viewHolder.setNoteTime(timestamp);
+                            viewHolder.setNoteTime(getDate(Long.parseLong(timestamp)));
+                            viewHolder.setNoteType(type);
                             viewHolder.noteCard.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -147,5 +154,14 @@ public class MainActivity extends AppCompatActivity {
     private int dpToPx(int dp){
         Resources r = getResources();
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,dp,r.getDisplayMetrics()));
+    }
+
+    //Transfer timestamp into actual Date
+
+    private String getDate(long time) {
+        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+        cal.setTimeInMillis(time);
+        String date = DateFormat.format("yyyy.MM.dd'at' HH:mm:ss z", cal).toString();
+        return date;
     }
 }
