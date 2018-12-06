@@ -1,7 +1,9 @@
 package com.example.liuyu.finalproject;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -36,6 +38,9 @@ import java.util.Map;
 
 
 public class NewNoteActivity extends AppCompatActivity {
+
+    static final int REQUEST_CAMERA = 666;
+    static final int REQUEST_SPEECH = 555;
 
     private Button btnCreate;
     private EditText etTitle,etContent,etType;
@@ -98,7 +103,7 @@ public class NewNoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent carmeraIntent = new Intent(NewNoteActivity.this,TextRecognitionActivity.class);
-                startActivity(carmeraIntent);
+                startActivityForResult(carmeraIntent,REQUEST_CAMERA);
             }
         });
 
@@ -107,7 +112,7 @@ public class NewNoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent speechIntent = new Intent(NewNoteActivity.this,SpeechToTextActivity.class);
-                startActivity(speechIntent);
+                startActivityForResult(speechIntent,REQUEST_SPEECH);
             }
         });
 
@@ -263,5 +268,25 @@ public class NewNoteActivity extends AppCompatActivity {
         cal.setTimeInMillis(time);
         String date = DateFormat.format("yyyy.MM.dd ' at ' HH:mm:ss", cal).toString();
         return date;
+    }
+
+    //Deal with to Speech Intent and Text Recognition Intent
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,Intent data) {
+
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+
+        if(requestCode==REQUEST_CAMERA){
+            //Deal with the data get from camera here
+
+
+        }else{
+            //Deal with the data get from Speech to text here
+
+        }
+
+
     }
 }
