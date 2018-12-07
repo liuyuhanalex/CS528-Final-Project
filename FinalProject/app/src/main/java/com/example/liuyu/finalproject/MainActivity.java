@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
     private String getDate(long time) {
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(time);
-        String date = DateFormat.format("yyyy.MM.dd'at' HH:mm:ss z", cal).toString();
+        String date = DateFormat.format("yyyy.MM.dd 'at' HH:mm:ss z", cal).toString();
         return date;
     }
 }

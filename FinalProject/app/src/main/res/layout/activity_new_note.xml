@@ -27,8 +27,9 @@
             android:layout_height="match_parent"
             android:layout_weight="0.5"
             android:gravity="left|center"
+            android:drawableLeft="@drawable/ic_title_black_24dp"
             android:text="Title:"
-            android:textSize="24sp" />
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/new_note_title"
@@ -36,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="6"
             android:hint="Type your title here..."
-            android:padding="10dp" />
+            android:textSize="18sp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -51,7 +52,8 @@
             android:layout_weight="0.5"
             android:gravity="left|center"
             android:text="Date:"
-            android:textSize="24sp" />
+            android:drawableLeft="@drawable/ic_date_range_black_24dp"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/note_date"
@@ -74,7 +76,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:text="Note Type:"
-            android:textSize="24sp" />
+            android:gravity="left|center"
+            android:drawableLeft="@drawable/ic_note_black_24dp"
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/new_note_type"
@@ -83,8 +87,7 @@
             android:layout_weight="6"
             android:ems="10"
             android:inputType="textPersonName"
-            android:textSize="18sp"
-            android:hint="Please enter the type of your note..."/>
+            android:textSize="18sp"/>
 
     </LinearLayout>
 
@@ -94,7 +97,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.3"
         android:text="Content:"
-        android:textSize="18sp" />
+        android:drawableLeft="@drawable/ic_content_paste_black_24dp"
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/new_note_content"

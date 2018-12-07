@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 public class SpeechToTextActivity extends AppCompatActivity {
 
-    final static int AUDIO_REQUEST_CODE = 666;
+    final static int AUDIO_REQUEST_CODE = 888;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
