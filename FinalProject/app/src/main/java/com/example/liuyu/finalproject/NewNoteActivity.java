@@ -164,7 +164,7 @@ public class NewNoteActivity extends AppCompatActivity {
         }
     }
 
-    private  void createNote(String title,String content,String type){
+    private void createNote(String title,String content,String type){
 
         if(fAuth.getCurrentUser()!=null){
 
@@ -281,14 +281,17 @@ public class NewNoteActivity extends AppCompatActivity {
 
         if(requestCode==REQUEST_CAMERA){
             //Deal with the data get from camera here
-            //TODO this afternoon
             String text =  data.getStringExtra("TextFromCamera");
-            Log.e("aaaaaaaaaaaaaaaaaa",text);
-            etContent.setText(text);
+            String OriginalContent = etContent.getText().toString();
+            String newText = OriginalContent + "\n" + text;
+            etContent.setText(newText);
 
         }else{
             //Deal with the data get from Speech to text here
-
+            String text = data.getStringExtra("TextFromSpeech");
+            String OriginalContent = etContent.getText().toString().toString();
+            String newText = OriginalContent+"\n" + text;
+            etContent.setText(newText);
         }
 
 
