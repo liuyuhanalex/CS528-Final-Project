@@ -38,6 +38,13 @@ dependencies {
     annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
     implementation 'android.arch.persistence.room:runtime:1.1.1'
     annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
+
+    //image crop library
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.+'
+
+    //image to text google library
+    implementation 'com.google.android.gms:play-services-vision:11.0.4'
+
 }
 
 apply plugin: 'com.google.gms.google-services'
