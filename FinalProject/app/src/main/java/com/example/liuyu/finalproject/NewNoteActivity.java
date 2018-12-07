@@ -31,6 +31,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
@@ -280,7 +281,10 @@ public class NewNoteActivity extends AppCompatActivity {
 
         if(requestCode==REQUEST_CAMERA){
             //Deal with the data get from camera here
-
+            //TODO this afternoon
+            String text =  data.getStringExtra("TextFromCamera");
+            Log.e("aaaaaaaaaaaaaaaaaa",text);
+            etContent.setText(text);
 
         }else{
             //Deal with the data get from Speech to text here

@@ -36,8 +36,9 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 
 public class TextRecognitionActivity extends AppCompatActivity {
 
-    EditText mResultEt;
-    ImageView mPreviewIv;
+    private EditText mResultEt;
+    private ImageView mPreviewIv;
+    private Button save;
 
     private static final int CAMERA_REQUEST_CODE = 200;
     private static final int STORAGE_REQUEST_CODE = 400;
@@ -58,6 +59,7 @@ public class TextRecognitionActivity extends AppCompatActivity {
 
         mResultEt = findViewById(R.id.resultEt);
         mPreviewIv = findViewById(R.id.imageIv);
+        save = findViewById(R.id.camera_text_save);
 
         //camera permission
         cameraPermission = new String[]{Manifest.permission.CAMERA,
@@ -65,6 +67,16 @@ public class TextRecognitionActivity extends AppCompatActivity {
 
         //storage permission
         storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.putExtra("TextFromCamera",mResultEt.getText().toString());
+                setResult(RESULT_OK,intent);
+                finish();
+            }
+        });
     }
 
     @Override
