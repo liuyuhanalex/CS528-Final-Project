@@ -118,7 +118,6 @@ public class TextRecognitionActivity extends AppCompatActivity {
                 }
                 if(which == 1){
                     //gallery option clicked
-                    //camera option clicked
                     if(!checkStoragePermission()){
                         //storage permission not allowed,request it
                         requestStoragePermission();

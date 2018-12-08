@@ -34,8 +34,6 @@ public class SpeechToTextActivity extends AppCompatActivity {
     }
 
     //Handle permission result
-
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if(grantResults.length>0){

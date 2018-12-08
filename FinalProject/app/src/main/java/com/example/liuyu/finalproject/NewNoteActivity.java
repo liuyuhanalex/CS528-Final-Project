@@ -1,7 +1,9 @@
 package com.example.liuyu.finalproject;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -281,6 +284,11 @@ public class NewNoteActivity extends AppCompatActivity {
                 }
                 break;
             }
+            case R.id.new_note_password_btn:{
+                if(!noteID.equals("no")){
+                    createPassword();
+                }
+            }
         }
         return true;
     }
@@ -302,6 +310,35 @@ public class NewNoteActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    //create password
+    private void createPassword(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Set password for this note");
+
+
+        final EditText input = new EditText(this);
+
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        builder.setView(input);
+
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String password = input.getText().toString();
+                fNoteDatabase.child(noteID).child("password").setValue(password);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 
     private String getDate(long time) {
@@ -337,7 +374,5 @@ public class NewNoteActivity extends AppCompatActivity {
             String address = place.getAddress().toString();
             showLocation.setText(address);
         }
-
-
     }
 }

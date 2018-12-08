@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
                 fNotesDatabase.child(noteId).addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+                    public void onDataChange(final DataSnapshot dataSnapshot) {
 
                         if(dataSnapshot.hasChild("title")&&dataSnapshot.hasChild("timestamp")
                                 &&dataSnapshot.hasChild("type")) {
@@ -122,9 +122,14 @@ public class MainActivity extends AppCompatActivity {
                             viewHolder.noteCard.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    Intent intent = new Intent(MainActivity.this, NewNoteActivity.class);
-                                    intent.putExtra("noteId", noteId);
-                                    startActivity(intent);
+                                    if(dataSnapshot.hasChild("password")){
+                                        //TODO:Compare input with password
+
+                                    }else {
+                                        Intent intent = new Intent(MainActivity.this, NewNoteActivity.class);
+                                        intent.putExtra("noteId", noteId);
+                                        startActivity(intent);
+                                    }
                                 }
                             });
                         }
