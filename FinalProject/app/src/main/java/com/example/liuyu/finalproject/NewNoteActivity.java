@@ -158,9 +158,10 @@ public class NewNoteActivity extends AppCompatActivity {
                 String title = etTitle.getText().toString().trim();
                 String content = etContent.getText().toString().trim();
                 String type = etType.getText().toString().trim();
+                String location = showLocation.getText().toString().trim();
 
                 if(!TextUtils.isEmpty(title)&&!TextUtils.isEmpty(content)){
-                    createNote(title,content,type);
+                    createNote(title,content,type,location);
                 }else{
                     Snackbar.make(v,"Fill empty fields",Snackbar.LENGTH_SHORT).show();
                 }
@@ -176,16 +177,20 @@ public class NewNoteActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    if (dataSnapshot.hasChild("title") && dataSnapshot.hasChild("content")) {
+                    if (dataSnapshot.hasChild("title") && dataSnapshot.hasChild("content")
+                            &&dataSnapshot.hasChild("type")
+                            &&dataSnapshot.hasChild("location")) {
                         String title = dataSnapshot.child("title").getValue().toString();
                         String content = dataSnapshot.child("content").getValue().toString();
                         String reTime=getDate(Long.parseLong(dataSnapshot.child("timestamp").getValue().toString()));
                         String type = dataSnapshot.child("type").getValue().toString();
+                        String location = dataSnapshot.child("location").getValue().toString();
 
                         etTitle.setText(title);
                         etContent.setText(content);
                         mdate.setText(reTime);
                         etType.setText(type);
+                        showLocation.setText(location);
                     }
                 }
 
@@ -197,7 +202,7 @@ public class NewNoteActivity extends AppCompatActivity {
         }
     }
 
-    private void createNote(String title,String content,String type){
+    private void createNote(String title,String content,String type,String location){
 
         if(fAuth.getCurrentUser()!=null){
 
@@ -208,6 +213,7 @@ public class NewNoteActivity extends AppCompatActivity {
                 updateMap.put("content",etContent.getText().toString().trim());
                 updateMap.put("timestamp",ServerValue.TIMESTAMP);
                 updateMap.put("type",etType.getText().toString().trim());
+                updateMap.put("location",showLocation.getText().toString().trim());
                 fNoteDatabase.child(noteID).updateChildren(updateMap);
 
                 Toast.makeText(this,"Note updated",Toast.LENGTH_SHORT).show();
@@ -222,6 +228,7 @@ public class NewNoteActivity extends AppCompatActivity {
                 noteMap.put("content", content);
                 noteMap.put("timestamp", ServerValue.TIMESTAMP);
                 noteMap.put("type",type);
+                noteMap.put("location",location);
 
                 Thread mainThread = new Thread(new Runnable() {
                     @Override
