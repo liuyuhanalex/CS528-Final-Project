@@ -1,11 +1,13 @@
 package com.example.liuyu.finalproject;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -21,6 +23,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.time.Clock;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,6 +48,7 @@ public class NewNoteActivity extends AppCompatActivity {
 
     static final int REQUEST_CAMERA = 666;
     static final int REQUEST_SPEECH = 555;
+    static final int PLACE_PICK_REQUEST = 444;
 
     private Button btnCreate;
     private EditText etTitle,etContent,etType;
@@ -58,10 +65,17 @@ public class NewNoteActivity extends AppCompatActivity {
 
     private boolean isExist;
 
+    //Here is for google location service
+    private TextView addLocation;
+    private EditText showLocation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_note);
+
+        addLocation = findViewById(R.id.note_add_location);
+        showLocation = findViewById(R.id.note_location);
 
         try{
             noteID = getIntent().getStringExtra("noteId");
@@ -114,6 +128,25 @@ public class NewNoteActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent speechIntent = new Intent(NewNoteActivity.this,SpeechToTextActivity.class);
                 startActivityForResult(speechIntent,REQUEST_SPEECH);
+            }
+        });
+        final Context context = this;
+
+        //TextView to select a place
+        addLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+                Intent intent;
+                try {
+                    intent = builder.build((Activity) context);
+                    startActivityForResult(intent,PLACE_PICK_REQUEST);
+                } catch (GooglePlayServicesRepairableException e) {
+                    e.printStackTrace();
+                } catch (GooglePlayServicesNotAvailableException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
 
@@ -286,12 +319,16 @@ public class NewNoteActivity extends AppCompatActivity {
             String newText = OriginalContent + "\n" + text;
             etContent.setText(newText);
 
-        }else{
+        }else if(requestCode == REQUEST_SPEECH){
             //Deal with the data get from Speech to text here
             String text = data.getStringExtra("TextFromSpeech");
             String OriginalContent = etContent.getText().toString().toString();
             String newText = OriginalContent+"\n" + text;
             etContent.setText(newText);
+        }else if(requestCode == PLACE_PICK_REQUEST){
+            Place place = PlacePicker.getPlace(data,this);
+            String address = place.getAddress().toString();
+            showLocation.setText(address);
         }
 
 

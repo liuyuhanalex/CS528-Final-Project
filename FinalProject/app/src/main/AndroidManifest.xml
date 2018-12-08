@@ -8,6 +8,9 @@
     <uses-feature android:name="android.hardware.camera"
         android:required="true"/>
 
+    <!--PlacePicker-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
     <!--Ask microphone premission-->
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
@@ -18,6 +21,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBsq4rnRi2IE-SihP2rFuaRti3PnOCiYHU"/>
+
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
@@ -36,7 +44,8 @@
             android:label="@string/sign_in" />
         <activity
             android:name=".NewNoteActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"/>
+
         <activity android:name=".SpeechToTextActivity" />
         <activity android:name=".TextRecognitionActivity"></activity>
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"

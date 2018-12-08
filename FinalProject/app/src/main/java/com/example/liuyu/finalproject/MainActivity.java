@@ -13,7 +13,11 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 //import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -22,6 +26,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
@@ -34,11 +39,17 @@ public class MainActivity extends AppCompatActivity {
     private GridLayoutManager gridLayoutManager;
 
     private DatabaseReference fNotesDatabase;
+    private ImageButton searchButton;
+    private TextView searchContent;
+    private String searchText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        searchButton = findViewById(R.id.main_search_btn);
+        searchContent = findViewById(R.id.main_search_content);
 
         mNoteList = findViewById(R.id.main_notes_list);
 
@@ -60,6 +71,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
         updateUI();
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchText = searchContent.getText().toString().trim();
+                //TODO:search the content which contain certain key words
+                Query query = fNotesDatabase.child("type")
+                        .orderByChild("title")
+                        .equalTo(searchText);
+
+
+
+            }
+        });
     }
 
     @Override

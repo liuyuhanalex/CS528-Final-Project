@@ -18,16 +18,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.3"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="0.5"
-            android:gravity="left|center"
             android:drawableLeft="@drawable/ic_title_black_24dp"
+            android:gravity="left|center"
             android:text="Title:"
             android:textSize="20sp" />
 
@@ -35,40 +36,43 @@
             android:id="@+id/new_note_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="6"
-            android:hint="Type your title here..."
-            android:textSize="18sp"/>
+            android:textSize="18sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.3">
+        android:layout_weight="1">
 
         <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="0.5"
+            android:drawableLeft="@drawable/ic_date_range_black_24dp"
             android:gravity="left|center"
             android:text="Date:"
-            android:drawableLeft="@drawable/ic_date_range_black_24dp"
             android:textSize="20sp" />
 
         <TextView
             android:id="@+id/note_date"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="6"
             android:gravity="center"
-            android:textSize="18sp"
-            android:textColor="@color/colorPrimary"/>
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_weight="0.3">
 
         <TextView
             android:id="@+id/textView5"
@@ -85,31 +89,81 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="6"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:textSize="18sp"/>
+            android:textSize="18sp" />
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView3"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.3"
-        android:text="Content:"
-        android:drawableLeft="@drawable/ic_content_paste_black_24dp"
-        android:textSize="20sp" />
+        android:layout_weight="1">
 
-    <EditText
-        android:id="@+id/new_note_content"
+        <TextView
+            android:id="@+id/note_add_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            android:drawableLeft="@drawable/ic_add_location_black_24dp"
+            android:gravity="left|center"
+            android:text="Location:"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/note_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="6"
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
+        android:layout_marginTop="10dp"
         android:layout_weight="10"
-        android:background="@android:color/transparent"
-        android:gravity="top"
-        android:hint="Type your description here..."
-        android:inputType="textMultiLine"
-        android:padding="10dp" />
+        app:cardElevation="3dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_content_paste_black_24dp"
+                android:text="Content:"
+                android:textSize="20sp" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="9">
+
+                <EditText
+                    android:id="@+id/new_note_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:gravity="top"
+                    android:hint="Insert you note here..."
+                    android:inputType="textMultiLine"
+                    android:padding="5dp" />
+
+            </ScrollView>
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -122,16 +176,16 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Camera"
-            android:drawableLeft="@drawable/ic_photo_camera_black_24dp"/>
+            android:drawableLeft="@drawable/ic_photo_camera_black_24dp"
+            android:text="Camera" />
 
         <Button
             android:id="@+id/speech"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Speech"
-            android:drawableLeft="@drawable/ic_record_voice_over_black_24dp"/>
+            android:drawableLeft="@drawable/ic_record_voice_over_black_24dp"
+            android:text="Speech" />
     </LinearLayout>
 
     <Button
