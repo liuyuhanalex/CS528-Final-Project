@@ -124,6 +124,10 @@ public class MainActivity extends AppCompatActivity {
                             viewHolder.setNotetitle(title);
                             viewHolder.setNoteTime(getDate(Long.parseLong(timestamp)));
                             viewHolder.setNoteType(type);
+
+                            if(dataSnapshot.hasChild("password")){
+                                viewHolder.lockIcon.setImageResource(R.drawable.ic_lock_black_24dp);
+                            }
                             viewHolder.noteCard.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
