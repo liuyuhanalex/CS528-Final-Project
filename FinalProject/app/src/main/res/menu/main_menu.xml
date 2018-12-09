@@ -7,4 +7,10 @@
         android:icon="@drawable/ic_note_add_white_24dp"
         app:showAsAction="always"
         />
+
+    <item android:id="@+id/main_log_out"
+        android:title="Log out"
+        android:icon="@drawable/ic_note_add_white_24dp"
+        app:showAsAction="collapseActionView"
+        />
 </menu>

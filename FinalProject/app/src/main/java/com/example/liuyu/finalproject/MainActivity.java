@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView searchContent;
     private String searchText;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -217,6 +218,11 @@ public class MainActivity extends AppCompatActivity {
                 Intent newIntent = new Intent(MainActivity.this,NewNoteActivity.class);
                 startActivity(newIntent);
                 break;
+
+            case R.id.main_log_out:
+                fAuth.signOut();
+                Intent intent = new Intent(MainActivity.this,StartAvtivity.class);
+                startActivity(intent);
         }
         return true;
     }
