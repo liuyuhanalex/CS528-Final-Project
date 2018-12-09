@@ -58,7 +58,8 @@ public class NewNoteActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private TextView mdate;
 
-    private Button camera,speech;
+    //Three button for text recognition,speech to text and share note
+    private Button camera,speech,share;
 
     private FirebaseAuth fAuth;
     private DatabaseReference fNoteDatabase;
@@ -101,6 +102,7 @@ public class NewNoteActivity extends AppCompatActivity {
 
         camera = findViewById(R.id.camera);
         speech = findViewById(R.id.speech);
+        share = findViewById(R.id.share);
 
         mToolbar = findViewById(R.id.toolbar2);
         mdate = findViewById(R.id.note_date);
@@ -133,6 +135,19 @@ public class NewNoteActivity extends AppCompatActivity {
                 startActivityForResult(speechIntent,REQUEST_SPEECH);
             }
         });
+
+        //Share
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("text/plain");
+                i.putExtra(Intent.EXTRA_TEXT, getNoteShared());
+                i = Intent.createChooser(i, "Send your note via");
+                startActivity(i);
+            }
+        });
+
         final Context context = this;
 
         //TextView to select a place
@@ -374,5 +389,20 @@ public class NewNoteActivity extends AppCompatActivity {
             String address = place.getAddress().toString();
             showLocation.setText(address);
         }
+    }
+
+    //Share your note with other people
+    public String getNoteShared() {
+        String title = etTitle.getText().toString();
+        String date = mdate.getText().toString();
+        String type = etType.getText().toString();
+        String location = showLocation.getText().toString();
+        String content = etContent.getText().toString();
+        String sharedNote = "The note title is " + title + "\n" +
+                "It was created on " + date + "\n" +
+                "The type is " + type + "\n" +
+                "The location is " + location + "\n" +
+                "The content is " + content;
+        return sharedNote;
     }
 }

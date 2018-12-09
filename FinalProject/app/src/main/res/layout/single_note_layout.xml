@@ -40,7 +40,8 @@
             <ImageView
                 android:id="@+id/lock_icon"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:foregroundGravity="center"/>
 
             <TextView
                 android:id="@+id/note_type"

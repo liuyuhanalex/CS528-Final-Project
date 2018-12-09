@@ -170,6 +170,13 @@
             android:layout_weight="1"
             android:drawableLeft="@drawable/ic_record_voice_over_black_24dp"
             android:text="Speech" />
+        <Button
+            android:id="@+id/share"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/ic_share_black_24dp"
+            android:text="Share" />
     </LinearLayout>
 
     <Button
