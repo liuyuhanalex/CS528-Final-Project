@@ -13,8 +13,10 @@ import android.text.InputType;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,7 +39,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     private FirebaseAuth fAuth;
     private RecyclerView mNoteList;
@@ -48,11 +50,16 @@ public class MainActivity extends AppCompatActivity {
     private TextView searchContent;
     private String searchText;
 
+    private GestureDetector gestureDetector;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //For gestureDetector
+        this.gestureDetector = new GestureDetector(this, new MyGestureListener());
 
         searchButton = findViewById(R.id.main_search_btn);
         searchContent = findViewById(R.id.main_search_content);
@@ -68,10 +75,8 @@ public class MainActivity extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
 
         if(fAuth.getCurrentUser()!=null){
-
             fNotesDatabase = FirebaseDatabase.getInstance().getReference().child("Notes")
                     .child(fAuth.getCurrentUser().getUid());
-
         }else{
 
         }
@@ -91,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        mNoteList.setOnTouchListener(touchListener);
     }
 
     @Override
@@ -133,7 +139,6 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(View v) {
                                     if(dataSnapshot.hasChild("password")){
-                                        //TODO:Compare input with password
                                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                                         builder.setTitle("Please enter the password");
 
@@ -240,4 +245,59 @@ public class MainActivity extends AppCompatActivity {
         String date = DateFormat.format("yyyy.MM.dd 'at' HH:mm:ss z", cal).toString();
         return date;
     }
+
+    //Gesture detection start here
+    View.OnTouchListener touchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            return gestureDetector.onTouchEvent(event);
+        }
+    };
+
+    class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
+
+        @Override
+        public boolean onDown(MotionEvent event) {
+            Log.d("TAG","onDown: ");
+
+            // don't return false here or else none of the other
+            // gestures will work
+            return true;
+        }
+
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent e) {
+            Log.i("TAG", "onSingleTapConfirmed: ");
+            return true;
+        }
+
+        @Override
+        public void onLongPress(MotionEvent e) {
+            Log.i("TAG", "onLongPress: ");
+            fAuth.signOut();
+            Intent intent = new Intent(MainActivity.this,StartAvtivity.class);
+            startActivity(intent);
+        }
+
+        @Override
+        public boolean onDoubleTap(MotionEvent e) {
+            Log.i("TAG", "onDoubleTap: ");
+            return true;
+        }
+
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2,
+                                float distanceX, float distanceY) {
+            Log.i("TAG", "onScroll: ");
+            return true;
+        }
+
+        @Override
+        public boolean onFling(MotionEvent event1, MotionEvent event2,
+                               float velocityX, float velocityY) {
+            Log.d("TAG", "onFling: ");
+            return true;
+        }
+    }
+
 }
