@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.text.format.DateFormat;
+import android.text.method.HideReturnsTransformationMethod;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.GestureDetector;
@@ -29,6 +30,7 @@ import android.widget.Toast;
 //import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -51,6 +53,8 @@ public class MainActivity extends AppCompatActivity{
     private String searchText;
 
     private GestureDetector gestureDetector;
+
+    private int Hidden = 0;
 
 
     @Override
@@ -88,14 +92,13 @@ public class MainActivity extends AppCompatActivity{
             public void onClick(View v) {
                 searchText = searchContent.getText().toString().trim();
                 //TODO:search the content which contain certain key words
-                Query query = fNotesDatabase.child("type")
+                Query query = fNotesDatabase
                         .orderByChild("title")
                         .equalTo(searchText);
 
-
-
             }
         });
+        //Using gesture detection on Recycle View
         mNoteList.setOnTouchListener(touchListener);
     }
 
@@ -120,6 +123,10 @@ public class MainActivity extends AppCompatActivity{
                 fNotesDatabase.child(noteId).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(final DataSnapshot dataSnapshot) {
+
+                        if(dataSnapshot.hasChild("password")&&Hidden==1){
+                            viewHolder.itemView.setVisibility(View.INVISIBLE);
+                        }
 
                         if(dataSnapshot.hasChild("title")&&dataSnapshot.hasChild("timestamp")
                                 &&dataSnapshot.hasChild("type")) {
@@ -179,7 +186,6 @@ public class MainActivity extends AppCompatActivity{
                                 }
                             });
                         }
-
                     }
 
                     @Override
@@ -259,9 +265,6 @@ public class MainActivity extends AppCompatActivity{
         @Override
         public boolean onDown(MotionEvent event) {
             Log.d("TAG","onDown: ");
-
-            // don't return false here or else none of the other
-            // gestures will work
             return true;
         }
 
@@ -273,7 +276,9 @@ public class MainActivity extends AppCompatActivity{
 
         @Override
         public void onLongPress(MotionEvent e) {
+            //Long press to log out
             Log.i("TAG", "onLongPress: ");
+            Toast.makeText(getApplicationContext(),"Long press to log out directly!",Toast.LENGTH_SHORT).show();
             fAuth.signOut();
             Intent intent = new Intent(MainActivity.this,StartAvtivity.class);
             startActivity(intent);
@@ -282,6 +287,12 @@ public class MainActivity extends AppCompatActivity{
         @Override
         public boolean onDoubleTap(MotionEvent e) {
             Log.i("TAG", "onDoubleTap: ");
+            if(Hidden==1){
+                Hidden = 0;
+            }else{
+                Hidden = 1;
+            }
+            onStart();
             return true;
         }
 
@@ -299,5 +310,4 @@ public class MainActivity extends AppCompatActivity{
             return true;
         }
     }
-
 }
