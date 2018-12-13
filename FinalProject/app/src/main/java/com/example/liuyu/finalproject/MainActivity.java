@@ -48,9 +48,9 @@ public class MainActivity extends AppCompatActivity{
     private GridLayoutManager gridLayoutManager;
 
     private DatabaseReference fNotesDatabase;
-    private ImageButton searchButton;
-    private TextView searchContent;
-    private String searchText;
+//    private ImageButton searchButton;
+//    private TextView searchContent;
+//    private String searchText;
 
     private GestureDetector gestureDetector;
 
@@ -65,8 +65,8 @@ public class MainActivity extends AppCompatActivity{
         //For gestureDetector
         this.gestureDetector = new GestureDetector(this, new MyGestureListener());
 
-        searchButton = findViewById(R.id.main_search_btn);
-        searchContent = findViewById(R.id.main_search_content);
+//        searchButton = findViewById(R.id.main_search_btn);
+//        searchContent = findViewById(R.id.main_search_content);
 
         mNoteList = findViewById(R.id.main_notes_list);
 
@@ -87,17 +87,17 @@ public class MainActivity extends AppCompatActivity{
 
         updateUI();
 
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                searchText = searchContent.getText().toString().trim();
-                //TODO:search the content which contain certain key words
-                Query query = fNotesDatabase
-                        .orderByChild("title")
-                        .equalTo(searchText);
-
-            }
-        });
+//        searchButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                searchText = searchContent.getText().toString().trim();
+//                //TODO:search the content which contain certain key words
+//                Query query = fNotesDatabase
+//                        .orderByChild("title")
+//                        .equalTo(searchText);
+//
+//            }
+//        });
         //Using gesture detection on Recycle View
         mNoteList.setOnTouchListener(touchListener);
     }

@@ -12,23 +12,23 @@
         android:layout_height="wrap_content"
         android:layout_weight="1">
 
-        <EditText
-            android:id="@+id/main_search_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:background="#B3ff9c40"
-            android:ems="10"
-            android:hint="Enter what you want to search" />
+        <!--<EditText-->
+            <!--android:id="@+id/main_search_content"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:layout_margin="5dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="#B3ff9c40"-->
+            <!--android:ems="10"-->
+            <!--android:hint="Enter what you want to search" />-->
 
-        <ImageButton
-            android:id="@+id/main_search_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/ic_search_black_24dp" />
+        <!--<ImageButton-->
+            <!--android:id="@+id/main_search_btn"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--app:srcCompat="@drawable/ic_search_black_24dp" />-->
 
     </LinearLayout>
 
