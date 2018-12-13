@@ -74,6 +74,13 @@
             android:background="@color/common_google_signin_btn_text_dark_default"
             android:text="Register"
             android:drawableLeft="@drawable/ic_person_add_black_24dp"/>
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/google_login"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginTop="2dp" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
